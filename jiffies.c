@@ -38,7 +38,7 @@ size_t count, loff_t *pos)
         return 0;
     }
     completed = 1;
-    rv = sprintf(buffer, "Hello World∖n");
+    rv = sprintf(buffer, "Value of Jiffies: %lu\n", jiffies);
 /* copies kernel space buffer to user space usr buf */             
     copy_to_user(usr_buf, buffer, rv);
     return rv;
