@@ -2,6 +2,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/hash.h>
+#include <linux/gcd.h> 
 
 /* This function is called when the module is loaded. */
 int simple_init(void)
