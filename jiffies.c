@@ -5,7 +5,7 @@
 #include <asm/uaccess.h>
 
 #define BUFFER_SIZE 128 
-#define PROC_NAME "hello"
+#define PROC_NAME "jiffies"
 
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos);
 
