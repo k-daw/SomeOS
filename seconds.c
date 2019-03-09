@@ -7,7 +7,7 @@
 
 #define BUFFER_SIZE 128 
 #define PROC_NAME "seconds"
-float  INITIAL_JIFFIES;
+unsigned long  INITIAL_JIFFIES;
 
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos);
 
