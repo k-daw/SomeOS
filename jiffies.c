@@ -16,7 +16,7 @@ static struct file_operations proc_ops = {
 /* This function is called when the module is loaded. */
 int proc_init(void)
 { /* creates the /proc/hello entry */
-    (PROC_NAME, 0666, NULL, &proc_ops);
+    proc_create(PROC_NAME, 0666, NULL, &proc_ops);
     return 0;
 }
 /* This function is called when the module is removed. */ 
