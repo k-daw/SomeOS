@@ -6,14 +6,14 @@
 /* This function is called when the module is loaded. */
 int simple_init(void)
 {       
-    (KERN_INFO "GOLDEN RATIO: %lu\n", GOLD_RATIO_PRIME); 
-    (KERN_INFO "GDC: %lu\n", gcd(3300,24)); 
+    printk(KERN_INFO "GOLDEN RATIO: %lu\n", GOLD_RATIO_PRIME); 
+    printk(KERN_INFO "GDC: %lu\n", gcd(3300,24)); 
     return 0;
 }
 
 void simple_exit(void)
 {
-    (KERN_INFO "Removing Kernel Module∖n"); 
+    printk(KERN_INFO "Removing Kernel Module∖n"); 
 }
 
 module_init(simple_init);
