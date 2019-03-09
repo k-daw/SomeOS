@@ -6,8 +6,8 @@
 #include <linux/jiffies.h>
 
 #define BUFFER_SIZE 128 
-#define INITIAL_JIFFIES 0
 #define PROC_NAME "seconds"
+float  INITIAL_JIFFIES;
 
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos);
 
@@ -33,6 +33,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf,
 size_t count, loff_t *pos)
 { 
     int rv=0;
+    float elapsed_time;
     char buffer[BUFFER_SIZE];
     static int completed = 0;
     if (completed)
@@ -41,7 +42,7 @@ size_t count, loff_t *pos)
         return 0;
     }
     completed = 1;
-    float elapsed_time = (jiffies - INITIAL_JIFFIES) * HZ;
+    elapsed_time = (jiffies - INITIAL_JIFFIES) * HZ;
     rv = sprintf(buffer, "Elapsed Time on Module Init: %lu\n", elapsed_time);
 /* copies kernel space buffer to user space usr buf */             
     copy_to_user(usr_buf, buffer, rv);
