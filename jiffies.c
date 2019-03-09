@@ -7,7 +7,7 @@
 #define BUFFER_SIZE 128 
 #define PROC_NAME "hello"
 
-ssize_t proc read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos);
+ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos);
 
 static struct file_operations proc_ops = {
     .owner = THIS_MODULE,
@@ -30,7 +30,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf,
 size_t count, loff_t *pos)
 { 
     int rv=0;
-    char buffer[BUFFER SIZE];
+    char buffer[BUFFER_SIZE];
     static int completed = 0;
     if (completed)
     {
