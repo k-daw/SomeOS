@@ -34,7 +34,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf,
 size_t count, loff_t *pos)
 { 
     int rv=0;
-    int elapsed_time;
+    int elapsed_time = 0;
     char buffer[BUFFER_SIZE];
     static int completed = 0;
     if (completed)
@@ -43,9 +43,9 @@ size_t count, loff_t *pos)
         return 0;
     }
     completed = 1;
-    
+
     elapsed_time = jiffies/ HZ - INITIAL_JIFFIES/ HZ ;
-    rv = sprintf(buffer, "Elapsed Time on Module Init: %d\n", elapsed_time);
+    rv = sprintf(buffer, "Elapsed Time on Module Init: %lu\n", jiffies/ HZ - INITIAL_JIFFIES/ HZ );
 /* copies kernel space buffer to user space usr buf */             
     copy_to_user(usr_buf, buffer, rv);
     return rv;
