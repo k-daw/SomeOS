@@ -43,7 +43,7 @@ size_t count, loff_t *pos)
         return 0;
     }
     completed = 1;
-    elapsed_time = (jiffies - INITIAL_JIFFIES) * HZ;
+    elapsed_time = (jiffies - INITIAL_JIFFIES) / HZ ;
     rv = sprintf(buffer, "Elapsed Time on Module Init: %lu\n", elapsed_time);
 /* copies kernel space buffer to user space usr buf */             
     copy_to_user(usr_buf, buffer, rv);
