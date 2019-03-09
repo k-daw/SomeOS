@@ -3,12 +3,12 @@
 #include <linux/module.h>
 
 /* This function is called when the module is loaded. */
-int simple init(void)
+int simple_init(void)
 {       (KERN INFO "Loading Kernel Module∖n"); 
 return 0;
 }
 
-void simple exit(void)
+void simple_exit(void)
 {
     (KERN INFO "Removing Kernel Module∖n"); 
 }
