@@ -7,7 +7,8 @@
 
 #define BUFFER_SIZE 128 
 #define PROC_NAME "seconds"
-unsigned long  INITIAL_JIFFIES;
+
+unsigned long  INT_JIFFIES;
 
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos);
 
@@ -19,7 +20,7 @@ static struct file_operations proc_ops = {
 int proc_init(void)
 { /* creates the /proc/hello entry */
     proc_create(PROC_NAME, 0666, NULL, &proc_ops);
-    INITIAL_JIFFIES = jiffies;
+    INT_JIFFIES = jiffies;
     return 0;
 }
 /* This function is called when the module is removed. */ 
