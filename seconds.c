@@ -34,7 +34,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf,
 size_t count, loff_t *pos)
 { 
     int rv=0;
-    float elapsed_time;
+    unsigned long elapsed_time;
     char buffer[BUFFER_SIZE];
     static int completed = 0;
     if (completed)
