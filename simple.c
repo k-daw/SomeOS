@@ -6,7 +6,7 @@
 /* This function is called when the module is loaded. */
 int simple_init(void)
 {       
-    printk(KERN_INFO "GOLDEN RATIO: %lu\n", GOLD_RATIO_PRIME); 
+    printk(KERN_INFO "GOLDEN RATIO: %lu\n", GOLDEN_RATIO_PRIME); 
     printk(KERN_INFO "GDC: %lu\n", gcd(3300,24)); 
     return 0;
 }
