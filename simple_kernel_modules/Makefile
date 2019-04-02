@@ -1,4 +1,3 @@
-obj-m += simple.o
 obj-m += jiffies.o
 obj-m += seconds.o
  

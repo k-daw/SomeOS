@@ -47,5 +47,5 @@ size_t count, loff_t *pos)
 module_init(proc_init);
 module_exit(proc_exit);
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Hello Module"); 
+MODULE_DESCRIPTION("Jiffies Module"); 
 MODULE_AUTHOR("SGG");

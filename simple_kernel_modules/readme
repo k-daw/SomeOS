@@ -1,0 +1,20 @@
+This dirctorney includes the solution to Assignment 1 & 2
+
+Assignment one:
+    Jiffies include a kernel module that prints the jiffies count 
+    To print it, follow the following commands
+    cd /THIS_DIRECTORY
+    make
+    sudo insmod jiffies.ko
+    cat /proc/jiffies
+
+Assignment Two:
+    Seconds.c include a kernel module that prints the seconds count
+    since the second module was loaded to the kernel
+
+    To print the seconds
+
+    cd /THIS_DIRECTORY
+    make
+    sudo insmod seconds.ko
+    cat /proc/seconds
