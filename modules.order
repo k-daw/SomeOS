@@ -1,0 +1,3 @@
+kernel//home/osc/SomeOS/simple.ko
+kernel//home/osc/SomeOS/jiffies.ko
+kernel//home/osc/SomeOS/seconds.ko
