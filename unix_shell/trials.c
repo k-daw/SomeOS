@@ -72,8 +72,9 @@ int get_args(char *args[MAX_LINE/2 + 1], int * operator_index, int * operator_ty
     for (i = 0; i < n; i++){
         // printf("I AM HERE 4");
         if (strncmp(args[i], "<", 1)==0) {*(operator_type) = 0; break;}
-        if (strncmp(args[i], ">", 1)==0) {*(operator_type) = 1; break;}
-        if (strncmp(args[i], "|", 1)==0) {*(operator_type) = 2; break;}
+        else if (strncmp(args[i], ">", 1)==0) {*(operator_type) = 1; break;}
+        else if (strncmp(args[i], "|", 1)==0) {*(operator_type) = 2; break;}
+        else *(operator_type) = -1;
     }
     if (i != n) *operator_index = i;
 
@@ -86,6 +87,7 @@ int get_args(char *args[MAX_LINE/2 + 1], int * operator_index, int * operator_ty
 int main(void)
 {
     char *args[MAX_LINE/2 + 1];
+    
     char *buff[41];
     char * second_operands[40];
     int operator_index, operator_type;
@@ -120,6 +122,7 @@ int main(void)
         pid = fork();
         if (pid == 0){  // Child Process
             int index = 0;
+
             if (operator_type >= 0){
                 args[operator_index] = NULL;
                 for (i = operator_index+1; i < n; i++){
@@ -132,48 +135,45 @@ int main(void)
                 int fd = open( second_operands[index-1],  O_RDONLY);
                 if (fd == -1) {
                     printf("Can't find file specified\n");
-                    continue;
+                    exit(-1);
                 }
                 dup2(fd, STDIN_FILENO);
                 close(fd);
                 if(execvp(args[0], args) == -1){
                     printf("Command is not avaliable\n");
                 }
-                continue;
+                exit(1);
             }
             
-            if (operator_type == 1)
+            else if (operator_type == 1)
             {
                 int fd = open(second_operands[index-1], O_WRONLY | O_CREAT | O_APPEND, 0644);
                 dup2(fd, STDOUT_FILENO);
                 close(fd);
                 if(execvp(args[0], args) == -1){
                     printf("Command is not avaliable\n");
+                    exit(-1);
                 }
-                continue;
+                exit(1);
             }
-            if (operator_type == 2){
-                printf("Pipe\n");
+            else if (operator_type == 2){
                 if (pipe(fd_pipe) == -1) {
                     fprintf(stderr,"Pipe failed");
-                    continue;
-                }
-   
-                for(i = 0; i < operator_index; i++) printf("args[%d] : %s\n", i, second_operands[i]);
-                
+                    exit(-9);
+                }             
                 pid_pipe = fork();
                 if (pid_pipe < 0) fprintf(stderr, "Fork Failed");
                 if (pid_pipe == 0){
                     close(fd_pipe[WRITE_END]);
                     dup2(fd_pipe[READ_END], STDIN_FILENO);
-                    dup2(saved_stdout, 1);
-                    printf("Second Operads %s", second_operands[0]);
                     close(saved_stdout);
+                    
                     if(execvp(second_operands[0], second_operands) == -1){
                             printf("Piped Command is not failed to execute\n");
-                            continue;
-                        }
-                        close(fd_pipe[READ_END]);
+                            exit(-9);
+                    }
+                    dup2(saved_stdout, 1);
+                    close(fd_pipe[READ_END]);
                     exit(1); 
                 }
                 close(fd_pipe[READ_END]);
@@ -181,15 +181,16 @@ int main(void)
                 close(fd_pipe[WRITE_END]);
                 if(execvp(args[0], args) == -1){
                     printf("Command is not avaliable\n");
+                    exit(-1);
                 }
-                
-                continue;
+                exit(1);
             }
-            
-            if(execvp(args[0], args) == -1){
-                printf("Command is not avaliable\n");
-            }
-            exit(1);   
+            else
+            {   
+                if(execvp(args[0], args) == -1)
+                {printf("Command is not avaliable\n"); exit(-9);}
+    
+            exit(1);  } 
         }
         else if (pid > 0)  // Parent process
         {   
@@ -199,6 +200,7 @@ int main(void)
         else{  // Failed 
             printf("Failed to fork");
         }
+        for (i=0;i<n;i++) * args[i] = NULL; // Reset Args
     }
     return 0;
 }
