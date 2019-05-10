@@ -45,10 +45,10 @@ int main(){
     int *noob;
     pthread_mutex_init(&mutex, NULL);
     pthread_cond_init(&cond_var, NULL);
-    sem = sem_open("SEM", 0, 0, 4);
-
+    sem = sem_open("SEM", sem, 0, 4);
+    if(sem == SEM_FAILED) printf("Failed");
     simulate_university(NULL);
-
+    pthread_join(&TA, NULL);
     for (int i = 0; i < MAX_STUDENTS; i++)
         pthread_join(STUDENTS[i], NULL);
     printf("Finished Simulation\n");
@@ -63,7 +63,6 @@ void simulate_university(void * param){
 
     for( i=0; i< MAX_STUDENTS; i++)
     {
-        
         pthread_create(&STUDENTS[i], &attr, simulate_student, i);
     }  // Create STUDENT Thread
 }
@@ -104,7 +103,8 @@ void *sit_with_ta(int time, int student_id){
 }
 
 int *ask_for_ta(int student_id){
-    if(sem_trywait(sem) == -1) return 0;
+    int value = sem_trywait(sem);
+    if( value == -1) return 0;
     else{
         printf("Waiting for TA: %d\n", student_id);
         wait_for_ta(student_id);
