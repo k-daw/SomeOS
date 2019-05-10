@@ -45,7 +45,7 @@ int main(){
     int *noob;
     pthread_mutex_init(&mutex, NULL);
     pthread_cond_init(&cond_var, NULL);
-    sem = sem_open("SEM", sem, 0, 4);
+    sem = sem_open(sem, 0, 3);
     if(sem == SEM_FAILED) printf("Failed");
     simulate_university(NULL);
     pthread_join(&TA, NULL);
