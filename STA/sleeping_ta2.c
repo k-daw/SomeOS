@@ -18,6 +18,7 @@ void programming();
 
 pthread_t STUDENTS[MAX_STUDENTS];
 pthread_t TA;
+pthread_attr_t attr;
 
 sem_t *sem_student;  // for accessing the chair
 sem_t *sem_ta;  // for waking up the TA
@@ -37,6 +38,14 @@ int main(int argc, char **argv)
     pthread_mutex_init(mutex_waiting, NULL);
     sem_init(sem_ta, 0, 0);  // Initially TA is sleeping
     sem_init(sem_student, 0, 0); // Initially asking for a chair is possible
+
+    pthread_attr_init(&attr);
+    pthread_create(&TA, &attr, simulate_ta, NULL);  // Create TA Thread
+    int i;
+    for( i=0; i< MAX_STUDENTS; i++)
+    {
+        pthread_create(&STUDENTS[i], &attr, simulate_student, i);
+    }  // Create STUDENT Thread
 
     pthread_join(&TA, NULL);
     for (int i = 0; i < MAX_STUDENTS; i++)
