@@ -72,13 +72,14 @@ void *simulate_student(void * param){
     }
 }
 
-
+ 
 void *simulate_ta(void *param){
     printf("Created Thread for TA\n");
     while(1){
         pthread_mutex_lock(&mutex_waiting);
         if(waiting_count) sit_with_student();
         pthread_mutex_unlock(&mutex_waiting);
+        printf("TA IS SLEEPING\n");
         sem_wait(&sem_ta); // Sleep or busy waiting until a student come
     }
 }
