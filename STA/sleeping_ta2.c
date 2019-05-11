@@ -46,13 +46,14 @@ int main(int argc, char **argv)
     int i;
     for( i=0; i< MAX_STUDENTS; i++)
     {
+        student_ids[i] = i;
         pthread_create(&STUDENTS[i], NULL, simulate_student, (void *) &student_ids[i]);
     }  // Create STUDENT Thread
 
     pthread_join(TA, NULL);
     for (int i = 0; i < MAX_STUDENTS; i++)
     {
-        student_ids[i] = i;
+        
         pthread_join(STUDENTS[i], NULL);
     }
     sem_destroy(&sem_ta);
@@ -83,6 +84,7 @@ void *simulate_ta(void *param){
         sem_wait(&sem_ta); // Sleep or busy waiting until a student come
     }
 }
+
 int go_to_ta(int student_id){
     
     int successful = 0;
