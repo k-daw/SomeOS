@@ -46,7 +46,7 @@ int main(int argc, char **argv)
     int i;
     for( i=0; i< MAX_STUDENTS; i++)
     {
-        pthread_create(&STUDENTS[i], NULL, simulate_student, (void *) student_ids + i);
+        pthread_create(&STUDENTS[i], NULL, simulate_student, (void *) &student_ids[i]);
     }  // Create STUDENT Thread
 
     pthread_join(TA, NULL);
