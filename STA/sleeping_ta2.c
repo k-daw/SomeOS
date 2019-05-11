@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     sem_init(&sem_ta, 0, 0);  // Initially TA is sleeping
     sem_init(&sem_student, 0, 0); // Initially asking for a chair is possible
 
-    printf("Creating Threads");
+    printf("Creating Threads\n");
     pthread_create(&TA, NULL, simulate_ta, NULL);  // Create TA Thread
     int i;
     for( i=0; i< MAX_STUDENTS; i++)
@@ -102,7 +102,7 @@ int insert(int student_id)
     else
     {
         if (front == - 1)  front = 0;  // If queue is empty
-        printf("Student ID: %d is waiting for TA ", student_id);
+        printf("Student ID: %d is waiting for TA \n", student_id);
         rear = (rear + 1) % MAX_WAITING_STUDENTS;
         queue_chairs[rear] = student_id;
         
