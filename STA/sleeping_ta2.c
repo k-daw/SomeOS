@@ -22,7 +22,7 @@ pthread_attr_t attr;
 
 sem_t *sem_student;  // for accessing the chair
 sem_t *sem_ta;  // for waking up the TA
-pthread_mutex_t *mutex_waiting;  // for locking the  count
+pthread_mutex_t mutex_waiting;  // for locking the  count
 
 int student_ids[10];
 // QUEUE OPERATIONS // 
@@ -36,8 +36,7 @@ void delete();
 int main(int argc, char **argv)
 {   
     printf("Entered Main \n");
-    pthread_mutex_init(mutex_waiting, NULL);
-    
+    pthread_mutex_init(&mutex_waiting, NULL);
     printf("Creating Semaphores\n");
     sem_init(sem_ta, 0, 0);  // Initially TA is sleeping
     sem_init(sem_student, 0, 0); // Initially asking for a chair is possible
@@ -77,9 +76,9 @@ void *simulate_student(void * param){
 void *simulate_ta(void *param){
     printf("Created Thread for TA\n");
     while(1){
-        pthread_mutex_lock(mutex_waiting);
+        pthread_mutex_lock(&mutex_waiting);
         if(waiting_count) sit_with_student();
-        pthread_mutex_unlock(mutex_waiting);
+        pthread_mutex_unlock(&mutex_waiting);
         sem_wait(sem_ta); // Sleep or busy waiting until a student come
     }
 }
@@ -107,10 +106,10 @@ int insert(int student_id)
         rear = (rear + 1) % MAX_WAITING_STUDENTS;
         queue_chairs[rear] = student_id;
         
-        pthread_mutex_lock(mutex_waiting);
+        pthread_mutex_lock(&mutex_waiting);
         if(waiting_count == 0) sem_post(sem_ta);  // Wake up TA
         waiting_count ++;
-        pthread_mutex_unlock(mutex_waiting);
+        pthread_mutex_unlock(&mutex_waiting);
         
         return 1;  // Addition Successful
     }
