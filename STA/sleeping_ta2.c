@@ -20,8 +20,8 @@ pthread_t STUDENTS[MAX_STUDENTS];
 pthread_t TA;
 pthread_attr_t attr;
 
-sem_t *sem_student;  // for accessing the chair
-sem_t *sem_ta;  // for waking up the TA
+sem_t sem_student;  // for accessing the chair
+sem_t sem_ta;  // for waking up the TA
 pthread_mutex_t mutex_waiting;  // for locking the  count
 
 int student_ids[10];
@@ -38,8 +38,8 @@ int main(int argc, char **argv)
     printf("Entered Main \n");
     pthread_mutex_init(&mutex_waiting, NULL);
     printf("Creating Semaphores\n");
-    sem_init(sem_ta, 0, 0);  // Initially TA is sleeping
-    sem_init(sem_student, 0, 0); // Initially asking for a chair is possible
+    sem_init(&sem_ta, 0, 0);  // Initially TA is sleeping
+    sem_init(&sem_student, 0, 0); // Initially asking for a chair is possible
 
     printf("Creating Threads");
     pthread_create(&TA, NULL, simulate_ta, NULL);  // Create TA Thread
@@ -55,8 +55,8 @@ int main(int argc, char **argv)
         student_ids[i] = i;
         pthread_join(STUDENTS[i], NULL);
     }
-    sem_destroy(sem_ta);
-    sem_destroy(sem_student);
+    sem_destroy(&sem_ta);
+    sem_destroy(&sem_student);
     return 0;
 }
 
@@ -79,16 +79,16 @@ void *simulate_ta(void *param){
         pthread_mutex_lock(&mutex_waiting);
         if(waiting_count) sit_with_student();
         pthread_mutex_unlock(&mutex_waiting);
-        sem_wait(sem_ta); // Sleep or busy waiting until a student come
+        sem_wait(&sem_ta); // Sleep or busy waiting until a student come
     }
 }
 int go_to_ta(int student_id){
     
     int successful = 0;
     // Critical Section
-    int shall_insert = sem_trywait(sem_student);
+    int shall_insert = sem_trywait(&sem_student);
     if (shall_insert == 0) successful = insert(student_id);
-    sem_post(sem_student);
+    sem_post(&sem_student);
     return successful;  // if he entered the queue
 
 }
@@ -107,7 +107,7 @@ int insert(int student_id)
         queue_chairs[rear] = student_id;
         
         pthread_mutex_lock(&mutex_waiting);
-        if(waiting_count == 0) sem_post(sem_ta);  // Wake up TA
+        if(waiting_count == 0) sem_post(&sem_ta);  // Wake up TA
         waiting_count ++;
         pthread_mutex_unlock(&mutex_waiting);
         
