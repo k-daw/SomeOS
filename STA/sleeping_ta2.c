@@ -82,6 +82,7 @@ void *simulate_ta(void *param){
         pthread_mutex_unlock(&mutex_waiting);
         printf("TA IS SLEEPING\n");
         sem_wait(&sem_ta); // Sleep or busy waiting until a student come
+        printf("Student Woke Up TA\n");
     }
 }
 
