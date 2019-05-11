@@ -6,6 +6,7 @@
 
 #define MAX 3
 #define MAX_WAITING_STUDENTS 3
+#define MAX_STUDENTS 10
 
 void * simulate_student(void *);
 void * simulate_ta(void *);
@@ -13,10 +14,16 @@ int go_to_ta();
 void sit_with_student();
 void programming();
 
+
+
+pthread_t STUDENTS[MAX_STUDENTS];
+pthread_t TA;
+
 sem_t *sem_student;  // for accessing the chair
 sem_t *sem_ta;  // for waking up the TA
 pthread_mutex_t *mutex_waiting;  // for locking the  count
 
+int student_ids[10];
 // QUEUE OPERATIONS // 
 int queue_chairs[MAX];
 int rear = - 1;
@@ -31,6 +38,14 @@ int main(int argc, char **argv)
     sem_init(sem_ta, 0, 0);  // Initially TA is sleeping
     sem_init(sem_student, 0, 0); // Initially asking for a chair is possible
 
+    pthread_join(&TA, NULL);
+    for (int i = 0; i < MAX_STUDENTS; i++)
+    {
+        student_ids[i] = i;
+        pthread_join(STUDENTS[i], (void *) student_ids + i);
+    }
+    sem_destroy(sem_ta);
+    sem_destroy(sem_student);
     return 0;
 }
 
