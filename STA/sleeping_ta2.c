@@ -35,8 +35,10 @@ int insert();
 void delete();
 int main(int argc, char **argv)
 {   
+    printf("Entered Main \n");
     pthread_mutex_init(mutex_waiting, NULL);
     
+    printf("Creating Semaphores\n");
     sem_init(sem_ta, 0, 0);  // Initially TA is sleeping
     sem_init(sem_student, 0, 0); // Initially asking for a chair is possible
 
