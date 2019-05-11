@@ -30,7 +30,7 @@ int main(int argc, char **argv)
     pthread_mutex_init(mutex_waiting, NULL);
     sem_init(sem_ta, 0, 0);  // Initially TA is sleeping
     sem_init(sem_student, 0, 0); // Initially asking for a chair is possible
-    
+
     return 0;
 }
 
@@ -81,6 +81,7 @@ int insert(int student_id)
         queue_chairs[rear] = student_id;
         
         pthread_mutex_lock(mutex_waiting);
+        if(waiting_count == 0) sem_post(sem_ta);  // Wake up TA
         waiting_count ++;
         pthread_mutex_unlock(mutex_waiting);
         
