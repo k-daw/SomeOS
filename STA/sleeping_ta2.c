@@ -36,6 +36,7 @@ void delete();
 int main(int argc, char **argv)
 {   
     pthread_mutex_init(mutex_waiting, NULL);
+    
     sem_init(sem_ta, 0, 0);  // Initially TA is sleeping
     sem_init(sem_student, 0, 0); // Initially asking for a chair is possible
 
@@ -47,7 +48,7 @@ int main(int argc, char **argv)
         pthread_create(&STUDENTS[i], NULL, simulate_student, (void *) student_ids + i);
     }  // Create STUDENT Thread
 
-    pthread_join(&TA, NULL);
+    pthread_join(TA, NULL);
     for (int i = 0; i < MAX_STUDENTS; i++)
     {
         student_ids[i] = i;
