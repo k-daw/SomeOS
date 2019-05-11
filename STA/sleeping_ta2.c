@@ -38,7 +38,8 @@ int main(int argc, char **argv)
     pthread_mutex_init(mutex_waiting, NULL);
     sem_init(sem_ta, 0, 0);  // Initially TA is sleeping
     sem_init(sem_student, 0, 0); // Initially asking for a chair is possible
-    
+
+    printf("Creating Threads");
     pthread_create(&TA, NULL, simulate_ta, NULL);  // Create TA Thread
     int i;
     for( i=0; i< MAX_STUDENTS; i++)
