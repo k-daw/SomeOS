@@ -6,7 +6,7 @@
 
 #define MAX 3
 #define MAX_WAITING_STUDENTS 3
-#define MAX_STUDENTS 3
+#define MAX_STUDENTS 1
 
 void * simulate_student(void *);
 void * simulate_ta(void *);
@@ -70,6 +70,7 @@ void *simulate_student(void * param){
         shall_go_to_ta = rand()%10;
         if (shall_go_to_ta < 4)
             if (!go_to_ta(student_id)) programming();
+        printf("Student is good \n");
     }
 }
 
