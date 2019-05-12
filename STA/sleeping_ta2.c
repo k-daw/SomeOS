@@ -105,7 +105,7 @@ int go_to_ta(int student_id){
 int insert(int student_id)
 {
     int add_item;
-    if (rear == MAX - 1)
+    if (waiting_count == MAX)
     {    printf("WAITING IS FULL, STUDENT %d is returning back\n", student_id);
         return 0;  // Addition Failed
     }
