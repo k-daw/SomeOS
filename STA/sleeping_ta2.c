@@ -69,9 +69,9 @@ void *simulate_student(void * param){
     while(1){
         programing_time = rand()%10;
         programming(programing_time);
-        printf("Student %d is going to TA\n", student_id);
+        // printf("Student %d is going to TA\n", student_id);
         go_to_ta(student_id);
-        printf("Student %d is good \n", waiting_count);
+        printf("Student %d is good \n", student_id);
     }
 }
 
@@ -92,6 +92,7 @@ int go_to_ta(int student_id){
     
     int successful = 0;
     // Critical Section
+    printf("Student %d is entering critical section \n");
     int shall_insert = sem_trywait(&sem_student);
     if (shall_insert == 0) successful = insert(student_id);
     sem_post(&sem_student);
