@@ -123,9 +123,9 @@ int insert(int student_id)
         queue_chairs[rear] = student_id;
         
         if(waiting_count == 0) sem_post(&sem_ta);  // Wake up TA
-        pthread_mutex_lock(&mutex_waiting);
+        //pthread_mutex_lock(&mutex_waiting);
         waiting_count ++;
-        pthread_mutex_unlock(&mutex_waiting);
+        //pthread_mutex_unlock(&mutex_waiting);
         sem_wait(&student_waiting[rear]);
         return 1;  // Addition Successful
     }
