@@ -109,7 +109,7 @@ int insert(int student_id)
 {
     int add_item;
     
-    if (waiting_count == MAX)
+    if (waiting_count >= MAX)
     {    
         //printf("WAITING IS FULL, STUDENT %d is returning back\n", student_id);
         return 0;  // Addition Failed
