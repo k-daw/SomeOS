@@ -1,0 +1,10 @@
+Sleeping TA
+To run the code use the following
+
+gcc -o sleeping_ta sleeping_ta2.c NUM_OF_STUDENTS
+./sleeping_ta
+
+* Deafult --> This is a simulation involving 10 Student Threads and One TA thread
+* The Max number of student waiting is 3
+* TA takes 2 seconds with each student
+* If no student are present, TA goes to Sleep
