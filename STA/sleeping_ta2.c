@@ -108,7 +108,7 @@ int go_to_ta(int student_id){
 int insert(int student_id)
 {
     int add_item;
-    pthread_mutex_lock(&mutex_waiting);
+    
     if (waiting_count == MAX)
     {    
         printf("WAITING IS FULL, STUDENT %d is returning back\n", student_id);
@@ -123,12 +123,13 @@ int insert(int student_id)
         queue_chairs[rear] = student_id;
         
         if(waiting_count == 0) sem_post(&sem_ta);  // Wake up TA
+        pthread_mutex_lock(&mutex_waiting);
         waiting_count ++;
-        
+        pthread_mutex_unlock(&mutex_waiting);
         //sem_wait(&student_waiting[rear]);
         return 1;  // Addition Successful
     }
-    pthread_mutex_unlock(&mutex_waiting);
+    
     
 }
 
