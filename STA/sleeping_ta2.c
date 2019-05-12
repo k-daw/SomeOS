@@ -71,7 +71,7 @@ void *simulate_student(void * param){
         programming(programing_time);
         printf("Student %d is going to TA\n", student_id);
         go_to_ta(student_id);
-        printf("Student %d is good \n", student_id);
+        printf("Student %d is good \n", waiting_count);
     }
 }
 
