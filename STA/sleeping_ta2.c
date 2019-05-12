@@ -92,7 +92,7 @@ int go_to_ta(int student_id){
     
     int successful = 0;
     // Critical Section
-    printf("Student %d is entering critical section \n");
+    printf("Student %d is entering critical section \n", student_id);
     int shall_insert = sem_trywait(&sem_student);
     if (shall_insert == 0) successful = insert(student_id);
     sem_post(&sem_student);
