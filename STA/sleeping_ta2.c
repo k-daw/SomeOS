@@ -12,7 +12,7 @@ void * simulate_student(void *);
 void * simulate_ta(void *);
 int go_to_ta();
 void sit_with_student();
-void programming();
+void programming(int);
 
 
 
@@ -62,14 +62,15 @@ int main(int argc, char **argv)
 }
 
 void *simulate_student(void * param){
-    int shall_go_to_ta;
+    int programing_time;
     int student_id = *((int *)param);
     printf("Created Thread for student: %d\n", student_id);
 
     while(1){
-        shall_go_to_ta = rand()%10;
-        if (shall_go_to_ta >= 4)
-            if (!go_to_ta(student_id)) programming();
+        programing_time = rand()%10;
+        programming(programing_time);
+        printf("Student %d is going to TA\n", student_id);
+        go_to_ta(student_id);
         printf("Student %d is good \n", student_id);
     }
 }
@@ -143,6 +144,6 @@ void sit_with_student(){
 }
 
 
-void programming(){
-    sleep(5);
+void programming(int time){
+    sleep(time);
 }
