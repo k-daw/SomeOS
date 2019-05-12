@@ -123,10 +123,10 @@ int insert(int student_id)
         queue_chairs[rear] = student_id;
         
         if(waiting_count == 0) sem_post(&sem_ta);  // Wake up TA
-        //pthread_mutex_lock(&mutex_waiting);
+        pthread_mutex_lock(&mutex_waiting);
         waiting_count ++;
-        //pthread_mutex_unlock(&mutex_waiting);
-        //sem_wait(&student_waiting[rear]);
+        pthread_mutex_unlock(&mutex_waiting);
+        sem_wait(&student_waiting[rear]);
         return 1;  // Addition Successful
     }
     
@@ -138,7 +138,7 @@ void delete()
 {
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("Student %d is sitting with TA\n", queue_chairs[front]);
-    //sem_post(&student_waiting[front]);
+    sem_post(&student_waiting[front]);
     front = (front + 1) % MAX_WAITING_STUDENTS;
     waiting_count --;
     printf("Waiting Students = %d", waiting_count);
