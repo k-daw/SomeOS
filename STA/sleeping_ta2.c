@@ -147,7 +147,11 @@ void delete()
 
 
 void sit_with_student(){
-    while(waiting_count) delete();
+    while(waiting_count) 
+    {   
+        sleep(2);
+        delete();
+    }
 }
 
 
