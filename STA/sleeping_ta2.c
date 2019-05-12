@@ -68,10 +68,11 @@ void *simulate_student(void * param){
 
     while(1){
         programing_time = rand()%10;
+        printf("Student %d is programing for %d \n", student_id, programing_time);
         programming(programing_time);
         // printf("Student %d is going to TA\n", student_id);
         go_to_ta(student_id);
-        printf("Student %d is good \n", student_id);
+        
     }
 }
 
