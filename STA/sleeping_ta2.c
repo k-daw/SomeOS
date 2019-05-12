@@ -45,7 +45,6 @@ int main(int argc, char **argv)
     for (i=0 ; i<MAX_WAITING_STUDENTS; i++) sem_init(&student_waiting[i], 0,0);
     printf("Creating Threads\n");
     pthread_create(&TA, NULL, simulate_ta, NULL);  // Create TA Thread
-    int i;
     for( i=0; i< MAX_STUDENTS; i++)
     {
         student_ids[i] = i;
