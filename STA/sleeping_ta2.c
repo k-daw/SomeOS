@@ -113,12 +113,11 @@ int insert(int student_id)
     }
     else
     {
+        pthread_mutex_lock(&mutex_waiting);
         if (front == - 1)  front = 0;  // If queue is empty
         printf("Student ID: %d is waiting for TA \n", student_id);
         rear = (rear + 1) % MAX_WAITING_STUDENTS;
         queue_chairs[rear] = student_id;
-        
-        pthread_mutex_lock(&mutex_waiting);
         if(waiting_count == 0) sem_post(&sem_ta);  // Wake up TA
         waiting_count ++;
         pthread_mutex_unlock(&mutex_waiting);
@@ -130,20 +129,13 @@ int insert(int student_id)
 
 void delete()
 {
-    if (front == - 1 || front > rear)
-    {
-        printf("Queue Underflow \n");
-        return ;
-    }
-    else
-    {
-        printf("Student %d is sitting with TA\n", queue_chairs[front]);
-        sem_post(&student_waiting[front]);
-        front = (front + 1) % MAX_WAITING_STUDENTS;
-        waiting_count --;
-        
-        
-    }
+
+    
+    printf("Student %d is sitting with TA\n", queue_chairs[front]);
+    sem_post(&student_waiting[front]);
+    front = (front + 1) % MAX_WAITING_STUDENTS;
+    waiting_count --;
+    
 } /* End of delete() */
 
 
