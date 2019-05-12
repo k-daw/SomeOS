@@ -68,7 +68,7 @@ void *simulate_student(void * param){
 
     while(1){
         shall_go_to_ta = rand()%10;
-        if (shall_go_to_ta < 4)
+        if (shall_go_to_ta > 4)
             if (!go_to_ta(student_id)) programming();
         printf("Student is good \n");
     }
