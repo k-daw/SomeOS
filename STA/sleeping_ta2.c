@@ -82,7 +82,7 @@ void *simulate_ta(void *param){
     printf("Created Thread for TA\n");
     while(1){
         pthread_mutex_lock(&mutex_waiting);
-        printf("TA IS CHECKING FOR STUDENTS\n");
+        printf("TA IS CHECKING FOR STUDENTS: %d\n", waiting_count);
         if(waiting_count) sit_with_student();
         pthread_mutex_unlock(&mutex_waiting);
         printf("TA IS SLEEPING\n");
@@ -136,7 +136,7 @@ int insert(int student_id)
 
 void delete()
 {
-    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("Student %d is sitting with TA\n", queue_chairs[front]);
     //sem_post(&student_waiting[front]);
     front = (front + 1) % MAX_WAITING_STUDENTS;
