@@ -69,7 +69,7 @@ void *simulate_student(void * param){
 
     while(1){
         programing_time = rand()%10;
-        printf("Student %d is programing for %d \n", student_id, programing_time);
+        //printf("Student %d is programing for %d \n", student_id, programing_time);
         programming(programing_time);
         // printf("Student %d is going to TA\n", student_id);
         go_to_ta(student_id);
@@ -94,9 +94,9 @@ int go_to_ta(int student_id){
     
     int successful = 0;
     // Critical Section
-    printf("Student %d is entering critical section \n", student_id);
+    //printf("Student %d is entering critical section \n", student_id);
     int shall_insert = sem_trywait(&sem_student);
-    printf("Shall_insert = %d \n", shall_insert);
+    //printf("Shall_insert = %d \n", shall_insert);
     if (shall_insert == 0) successful = insert(student_id);
     sem_post(&sem_student);
     return successful;  // if he entered the queue
@@ -107,30 +107,32 @@ int go_to_ta(int student_id){
 int insert(int student_id)
 {
     int add_item;
+    pthread_mutex_lock(&mutex_waiting);
     if (waiting_count == MAX)
-    {    printf("WAITING IS FULL, STUDENT %d is returning back\n", student_id);
+    {    
+        //printf("WAITING IS FULL, STUDENT %d is returning back\n", student_id);
         return 0;  // Addition Failed
     }
     else
     {
-        pthread_mutex_lock(&mutex_waiting);
+        
         if (front == - 1)  front = 0;  // If queue is empty
         printf("Student ID: %d is waiting for TA \n", student_id);
         rear = (rear + 1) % MAX_WAITING_STUDENTS;
         queue_chairs[rear] = student_id;
         if(waiting_count == 0) sem_post(&sem_ta);  // Wake up TA
         waiting_count ++;
-        pthread_mutex_unlock(&mutex_waiting);
+        
         sem_wait(&student_waiting[rear]);
         return 1;  // Addition Successful
     }
+    pthread_mutex_unlock(&mutex_waiting);
 }
 
 
 void delete()
 {
-
-    
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("Student %d is sitting with TA\n", queue_chairs[front]);
     sem_post(&student_waiting[front]);
     front = (front + 1) % MAX_WAITING_STUDENTS;
