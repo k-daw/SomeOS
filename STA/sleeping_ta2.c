@@ -106,8 +106,9 @@ int insert(int student_id)
 {
     int add_item;
     if (rear == MAX - 1)
-        printf("WAITING IS FULL, STUDENT %d is returning back\n", student_id);
+    {    printf("WAITING IS FULL, STUDENT %d is returning back\n", student_id);
         return 0;  // Addition Failed
+    }
     else
     {
         if (front == - 1)  front = 0;  // If queue is empty
