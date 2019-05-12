@@ -40,9 +40,9 @@ int main(int argc, char **argv)
     pthread_mutex_init(&mutex_waiting, NULL);
     printf("Creating Semaphores\n");
     sem_init(&sem_ta, 0, 0);  // Initially TA is sleeping
-    sem_init(&sem_student, 0, 0); // Initially asking for a chair is possible
+    sem_init(&sem_student, 0, 1); // Initially asking for a chair is possible
     int i;
-    for (i=0 ; i<MAX_WAITING_STUDENTS; i++) sem_init(&student_waiting[i], 0,0);
+    for (i=0 ; i<MAX_WAITING_STUDENTS; i++) sem_init(&student_waiting[i], 0,1);
     printf("Creating Threads\n");
     pthread_create(&TA, NULL, simulate_ta, NULL);  // Create TA Thread
     for( i=0; i< MAX_STUDENTS; i++)
