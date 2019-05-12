@@ -82,6 +82,7 @@ void *simulate_ta(void *param){
     printf("Created Thread for TA\n");
     while(1){
         pthread_mutex_lock(&mutex_waiting);
+        printf("TA IS CHECKING FOR STUDENTS\n")
         if(waiting_count) sit_with_student();
         pthread_mutex_unlock(&mutex_waiting);
         printf("TA IS SLEEPING\n");
