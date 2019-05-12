@@ -6,7 +6,7 @@
 
 #define MAX 3
 #define MAX_WAITING_STUDENTS 3
-#define MAX_STUDENTS 5
+#define MAX_STUDENTS 1
 
 void * simulate_student(void *);
 void * simulate_ta(void *);
