@@ -141,6 +141,7 @@ void delete()
     //sem_post(&student_waiting[front]);
     front = (front + 1) % MAX_WAITING_STUDENTS;
     waiting_count --;
+    printf("Waiting Students = %d", waiting_count);
     
 } /* End of delete() */
 
